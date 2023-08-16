@@ -1,51 +1,45 @@
-import json
-import re
-import requests
+from es import es_client
+from utils import get_mapped_entries
 
-# Generate Log Entry from JSON
-def generate_log_entry(parts):
-    pattern = r'\[(.*?)\] (\w+): (.*)'
-    match = re.match(pattern, parts)
+index_name = "logs"
 
-    if match:
-        timestamp = match.group(1)
-        log_level = match.group(2)
-        log_message = match.group(3)
-
-        return {
-            "timestamp": timestamp,
-            "log_level": log_level,
-            "log_message": log_message
+# Create Mapping
+def create_mapping():
+    body = {
+        "mappings": {
+            "properties": {
+            "timestamp": { "type": "text" },
+            "log_level": { "type": "keyword" },
+            "log_message": { "type": "text" }
+            }
         }
-    
-    else:
-        print("Log entry does not match the expected format.")
+    }
 
-# Variables
-log_file_path = "generated_logs.json"
-log_entries = []
-mapped_log_entries = []
+    try:
+        es_client.indices.create(index_name, body=body)
+        print("Mapping created")
+    except:
+        print(f"Error in Creating Mapping {index_name}")
 
-with open(log_file_path, "r") as log_file:
-    log_entries = json.load(log_file)
+# Add Docs in Mapping
+def add_docs(index_name, entries):
+    for entry in entries:
+        try:
+            es_client.index(index=index_name, body=entry)
+            print(f"Document added in {index_name} as {entry}")
+        except:
+            print(f"Error in adding the {entry} document as {index_name}")
 
-for line in log_entries:
-    parts = line.strip()
-    log_entry = generate_log_entry(parts)
-    mapped_log_entries.append(log_entry)
+# Delete Mapping
+def delete_mapping(index_name):
+    try:
+        es_client.indices.delete(index=index_name)
+        print("Mappings deleted!")
+    except:
+        print(f"Error in deleting the document as {index_name}")
 
+mapped_log_entries = get_mapped_entries()
 
-def run_indexing():
-    index_name = "logs"  # Replace with your index name
-    es_url = f"http://localhost:5601/{index_name}/_doc"
-
-    for log_entry in log_entries:
-        response = requests.post(es_url, json=log_entry)
-        print("response", response)
-
-        if response.status_code == 201:
-            print("Log entry indexed successfully.")
-        else:
-            print("Failed to index log entry:", response.content)
-
-run_indexing()
+# create_mapping()
+# add_docs(index_name, mapped_log_entries)
+# delete_mapping(index_name)
