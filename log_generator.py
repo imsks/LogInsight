@@ -29,7 +29,7 @@ def generate_log():
     log_level = log_levels[random_number]
     log_message = log_messages[random_number]
 
-    return f"[{timestamp}] {log_level}: {log_message}"
+    return f"{timestamp} {log_level}: {log_message}"
 
 # Loop and Generate Logs
 for i in range(number_entries):
