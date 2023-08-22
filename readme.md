@@ -27,3 +27,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install opensearch-py==2.2.0
 ```
+
+# Run OpenSearch Dashboards using Docker
+
+https://opensearch.org/docs/latest/install-and-configure/install-dashboards/docker/
