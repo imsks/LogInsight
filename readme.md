@@ -31,3 +31,9 @@ python3 -m pip install opensearch-py==2.2.0
 # Run OpenSearch Dashboards using Docker
 
 https://opensearch.org/docs/latest/install-and-configure/install-dashboards/docker/
+
+# Setup Lambda Function using SAM
+
+```
+sam init --runtime python3.8
+```
