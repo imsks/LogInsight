@@ -10,7 +10,8 @@ def get_logs():
 def lambda_handler(event, context):
     try:
         http_method = event['httpMethod']
-        print("HERE", http_method)
+        body = event['body']
+        print("HERE", body)
 
         if http_method == "GET":
             get_logs()
