@@ -1,9 +1,22 @@
 import json
 import requests
 
+def set_logs():
+    print("THIS IS POST CALL")
+
+def get_logs():
+    print("THIS IS GET CALL")
+
 def lambda_handler(event, context):
     try:
-        ip = requests.get("http://checkip.amazonaws.com/")
+        http_method = event['httpMethod']
+        print("HERE", http_method)
+
+        if http_method == "GET":
+            get_logs()
+        elif http_method == "POST":
+            set_logs()
+            
     except requests.RequestException as e:
         # Send some context about this error to Lambda Logs
         print(e)
@@ -14,6 +27,5 @@ def lambda_handler(event, context):
         "statusCode": 200,
         "body": json.dumps({
             "message": "hello world",
-            "location": ip.text.replace("\n", "")
         }),
     }
