@@ -1,5 +1,5 @@
-from es import es_client
-from utils import get_mapped_entries
+from app.src.db.es import es_client
+from app.src.utils.functions import get_mapped_entries
 
 index_name = "logs"
 

@@ -32,6 +32,11 @@ python3 -m pip install opensearch-py==2.2.0
 
 https://opensearch.org/docs/latest/install-and-configure/install-dashboards/docker/
 
+# RUN FLASK
+
+docker build -t lambda-app .
+docker run -p 6000:80 lambda-app
+
 # Setup Lambda Function using SAM
 
 ```
