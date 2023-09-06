@@ -17,7 +17,6 @@ EXPOSE 80
 ENV NAME World
 ENV FLASK_APP=index.py
 
-
 # Run app.py when the container launches
 CMD ["python", "index.py"]
 # CMD [ "python3", "-m" , "flask", "run"]
