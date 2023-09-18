@@ -1,4 +1,4 @@
-from controllers.logs import generate_logs
+from controllers.index import generate_logs
 from flask import request, jsonify, Blueprint
 
 log_routes = Blueprint('logs', __name__, url_prefix='/logs')

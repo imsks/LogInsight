@@ -1,19 +1,23 @@
 import sys
-from flask import Flask, request, jsonify
+from flask import Flask, request
 
 # Append the 'src' folder to the Python path
 sys.path.append('src')
 
-from routes.index import base_routes
-from routes.logs import log_routes
+from controllers.index import get_handler, post_handler
 
 # App Setup
 app = Flask(__name__)
 app.debug = True
 
-# Register Routes
-app.register_blueprint(base_routes)
-app.register_blueprint(log_routes)
+@app.route('/logs', methods=['GET', 'POST'])
+def random_logs():
+    method = request.method
+
+    if method == "GET":
+        return get_handler()
+    if method == "POST":
+        return post_handler()
 
 # App Run Setup
 if __name__ == '__main__':
