@@ -34,8 +34,7 @@ https://opensearch.org/docs/latest/install-and-configure/install-dashboards/dock
 
 # RUN FLASK
 
-docker build -t lambda-app .
-docker run -p 6000:80 lambda-app
+docker-compose up -d
 
 # Setup Lambda Function using SAM
 

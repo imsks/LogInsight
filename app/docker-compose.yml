@@ -43,6 +43,7 @@ services:
             - "6000:80"
         volumes:
             - .:/app
+        restart: always
 volumes:
     opensearch-data1:
     opensearch-data2:
