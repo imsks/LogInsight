@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from utils.log_generator import generate_random_logs
+from db.indexing import create_mapping
 
 # Handle GET
 def get_handler():
@@ -9,6 +10,11 @@ def get_handler():
 
 # Handle POST
 def post_handler():
+    # Random logs
+    logs = generate_random_logs()
+    map = create_mapping()
+
     return jsonify({
-        'status': True
+        'status': True,
+        'map': map
     })
