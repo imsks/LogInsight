@@ -1,4 +1,4 @@
-from .es import es_client
+from .es import connect_to_os
 from utils.functions import get_mapped_entries
 
 index_name = "logs"
@@ -16,16 +16,17 @@ def create_mapping():
     }
 
     try:
-        es_client.indices.create(index_name, body=body)
-        print("Mapping created")
-    except:
-        print(f"Error in Creating Mapping {index_name}")
+        connect_to_os().indices.create(index_name, body=body)
+        return True
+    except Exception as e:
+        print(f"Error in Creating Mapping {index_name} {e}")
+        return False
 
 # Add Docs in Mapping
 def add_docs(index_name, entries):
     for entry in entries:
         try:
-            es_client.index(index=index_name, body=entry)
+            connect_to_os.index(index=index_name, body=entry)
             print(f"Document added in {index_name} as {entry}")
         except:
             print(f"Error in adding the {entry} document as {index_name}")
@@ -33,7 +34,7 @@ def add_docs(index_name, entries):
 # Delete Mapping
 def delete_mapping(index_name):
     try:
-        es_client.indices.delete(index=index_name)
+        connect_to_os.indices.delete(index=index_name)
         print("Mappings deleted!")
     except:
         print(f"Error in deleting the document as {index_name}")
